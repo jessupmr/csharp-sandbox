@@ -8,43 +8,108 @@ namespace ConsoleUtilities.Writers
 {
 	public class Writer : IWriter
 	{
-		#region Constructors
-		public Writer() : this("--------------------------------", "---------- ---------- ----------") { }
+		private int _minEmptyLines = 1;
+		private int _maxEmptyLines = 10;
+		private string _headerLine = "--------------------------------";
+		private string _separatorLine = "---------- ---------- ----------";
+		private ConsoleColor _textColor = ConsoleColor.Gray;
 
-		public Writer(string HeaderLine, string SeparatorLine)
+		#region Constructors
+		public Writer() { }
+		#endregion
+
+		#region Setters
+		public void SetHeaderLine(string line)
 		{
-			this.HeaderLine = HeaderLine;
-			this.SeparatorLine = SeparatorLine;
+			_headerLine = line;
+		}
+		public void SetSeparatorLine(string line)
+		{
+			_separatorLine = line;
+		}
+		public void SetTextColor(ConsoleColor textColor)
+		{
+			_textColor = textColor;
 		}
 		#endregion
 
-		#region Properties
-		public string HeaderLine { get; set; }
-		public string SeparatorLine { get; set; }
-
-		public void Character(string character)
+		#region Append
+		public void Append(string text)
 		{
-			throw new NotImplementedException();
+			Append(text, _textColor);
 		}
+		public void Append(string text, ConsoleColor textColor)
+		{
+			Print(text, textColor);
+		}
+		#endregion
 
+		#region Empty Line
 		public void EmptyLine()
 		{
-			throw new NotImplementedException();
+			Console.WriteLine("");
 		}
+		public void EmptyLine(int numberOfLines)
+		{
+			if (numberOfLines < _minEmptyLines || numberOfLines > _maxEmptyLines)
+				return;
 
+			for (int i = 0; i < numberOfLines; i++)
+			{
+				EmptyLine();
+			}
+		}
+		#endregion
+
+		#region Header
 		public void Header(string text)
 		{
-			throw new NotImplementedException();
+			Header(text, _textColor);
 		}
+		public void Header(string text, ConsoleColor textColor)
+		{
+			PrintLine(_headerLine, textColor);
+			PrintLine(text, textColor);
+			PrintLine(_headerLine, textColor);
+		}
+		#endregion
 
+		#region Line
 		public void Line(string text)
 		{
-			throw new NotImplementedException();
+			Line(text, _textColor);
 		}
+		public void Line(string text, ConsoleColor textColor)
+		{
+			PrintLine(text, textColor);
+		}
+		#endregion
 
+		#region Separator
 		public void Separator()
 		{
-			throw new NotImplementedException();
+			Separator(_textColor);
+		}
+		public void Separator(ConsoleColor textColor)
+		{
+			PrintLine(_separatorLine, textColor);
+		}
+		#endregion
+
+		#region Private Methods
+		private void Print(string text, ConsoleColor textColor)
+		{
+			var currentColor = Console.ForegroundColor;
+			Console.ForegroundColor = textColor;
+			Console.Write(text);
+			Console.ForegroundColor = currentColor;
+		}
+		private void PrintLine(string text, ConsoleColor textColor)
+		{
+			var currentColor = Console.ForegroundColor;
+			Console.ForegroundColor = textColor;
+			Console.WriteLine(text);
+			Console.ForegroundColor = currentColor;
 		}
 		#endregion
 	}

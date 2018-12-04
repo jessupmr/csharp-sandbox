@@ -4,13 +4,23 @@ namespace ConsoleUtilities.Writers
 {
 	public interface IWriter
 	{
-		string HeaderLine { get; set; }
-		string SeparatorLine { get; set; }
+		void SetHeaderLine(string line);
+		void SetSeparatorLine(string line);
+		void SetTextColor(ConsoleColor textColor);
 
-		void Character(string character);
+		void Append(string text);
+		void Append(string text, ConsoleColor textColor);
+
 		void Line(string text);
+		void Line(string text, ConsoleColor textColor);
+
 		void EmptyLine();
+		void EmptyLine(int numberOfLines);
+
 		void Separator();
+		void Separator(ConsoleColor textColor);
+
 		void Header(string text);
+		void Header(string text, ConsoleColor textColor);
 	}
 }

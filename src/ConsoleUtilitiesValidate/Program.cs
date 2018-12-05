@@ -1,5 +1,6 @@
 ﻿using ConsoleUtilities.Writers;
 using System;
+using System.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,44 +12,27 @@ namespace ConsoleUtilitiesValidate
 	{
 		static void Main(string[] args)
 		{
-			Writer consoleWriter = new Writer();
-			ExecuteWriter(consoleWriter);
-			ExecuteColorWriter(consoleWriter);
+			ConsoleWriter consoleWriter = new ConsoleWriter();
+
+			//DoConsoleWriter();
+			DoConfigHelper();
+
 
 			consoleWriter.EmptyLine();
-			consoleWriter.Line("Press <enter> to quit.");
+			consoleWriter.TextLine("Press <enter> to quit.");
 			Console.ReadLine();
 		}
 
-		static void ExecuteWriter(IWriter write)
+		static void DoConsoleWriter()
 		{
-			write.Header("Begin: Execute Writer");
-			write.EmptyLine();
-			write.Line("this is a line.");
-			write.Separator();
-			write.Append("append ");
-			write.Append("this ");
-			write.Append("line");
-			write.EmptyLine(3);
-			write.Header("End: Execute Writer");
+			ConsoleWriterTest test = new ConsoleWriterTest();
+			test.Execute();
 		}
 
-		static void ExecuteColorWriter(IWriter write)
+		static void DoConfigHelper()
 		{
-			write.SetHeaderLine("++++++++++++++++++++++++++++++");
-			write.SetSeparatorLine("<<<<<<<<<<---------->>>>>>>>>>");
-			write.SetTextColor(ConsoleColor.White);
-
-			write.Header("Begin: Color Writer (Green)", ConsoleColor.Green);
-			write.EmptyLine();
-			write.Line("this is a red line.", ConsoleColor.Red);
-			write.Separator(ConsoleColor.Yellow);
-			write.Append("append ", ConsoleColor.Blue);
-			write.Append("this ", ConsoleColor.Cyan);
-			write.Append("line", ConsoleColor.Magenta);
-			write.EmptyLine(2);
-			write.Header("End: Execute Writer (Default)");
+			ConfigHelperTest test = new ConfigHelperTest();
+			test.Execute();
 		}
-
 	}
 }
